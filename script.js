@@ -12,12 +12,20 @@ form.onsubmit = (event) => {
   }
 
   let li = document.createElement("li");
-  li.append(todoInput.value);
+  li.className = "list-group-item";
+  const span = document.createElement("span");
+  span.innerHTML = todoInput.value;
+  li.append(span);
 
-  const button = document.createElement("button");
-  button.className = "remove-button";
-  button.innerText = "Delete";
-  li.append(button);
+  const deleteButton = document.createElement("button");
+  deleteButton.className = "remove-button btn btn-danger";
+  deleteButton.innerText = "Delete";
+  li.append(deleteButton);
+
+  let checkbox = document.createElement("input");
+  checkbox.setAttribute("type", "checkbox"); // <input type=checkbox
+  checkbox.className = "form-check-input";
+  li.prepend(checkbox);
 
   list.append(li);
 
@@ -33,10 +41,27 @@ todoInput.onfocus = () => {
 };
 
 list.onclick = function (event) {
-  const isRemoveButton = event.target.className === "remove-button";
+  const button = event.target;
+  const isRemoveButton = button.className === "remove-button";
 
   if (isRemoveButton) {
-    const li = event.target.closest("li");
+    const li = button.closest("li");
     li.remove();
   }
+};
+
+list.onchange = function (event) {
+  const checkbox = event.target;
+  checkbox.disabled = true;
+
+  // 1 - find parent LI
+  const parentLi = checkbox.closest("li");
+  // 2 - find button in current LI
+  const button = parentLi.querySelector("button");
+  // 3 - disabled=true for button
+  button.disabled = true;
+
+  // add class for LI
+  const span = parentLi.querySelector("span");
+  span.classList.add("completed");
 };

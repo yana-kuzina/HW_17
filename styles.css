@@ -1,0 +1,16 @@
+.error {
+    border-color: red;
+} 
+.completed {
+    text-decoration: line-through;
+}
+
+form {
+    display: flex;
+}
+
+.list-group-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
